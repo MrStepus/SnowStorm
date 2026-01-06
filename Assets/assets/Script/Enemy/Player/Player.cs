@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
     public void OnMove(InputAction.CallbackContext context)
     {
         _direction = context.ReadValue<Vector3>();
-        Debug.Log($"Move: {_direction}"); 
+         
     }
 
     public void OnMoveStop(InputAction.CallbackContext context)
@@ -40,3 +40,4 @@ public class Player : MonoBehaviour
         transform.position += movement;
     }
 }
+
