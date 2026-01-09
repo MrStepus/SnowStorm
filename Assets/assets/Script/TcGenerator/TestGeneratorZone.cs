@@ -1,17 +1,33 @@
+using System.Buffers.Text;
+using System.Diagnostics;
 using UnityEngine;
 
 public class TestGeneratorZone : MonoBehaviour
 {
     public int maxTcZone;
+    public float tcRate;
     private void OnTriggerEnter(Collider other)
     {
-        var playerTC = other.GetComponent<BaseTc>();
+        var baseTC = other.GetComponent<BaseTc>();
 
-        if (playerTC != null)
+        if (baseTC != null)
         {
             if (other.CompareTag("Enemy") || other.CompareTag("Player"))
             {
-                playerTC.TakeTc(maxTcZone);
+                baseTC.TakeTc(maxTcZone, tcRate);
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        var baseTC = other.GetComponent<BaseTc>();
+
+        if (baseTC != null)
+        {
+            if (other.CompareTag("Enemy") || other.CompareTag("Player"))
+            {
+                baseTC.TakeStopCorutinTc(maxTcZone, tcRate);
             }
         }
     }

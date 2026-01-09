@@ -3,20 +3,27 @@ using System.Collections;
 public class PlayerTc : BaseTc
 {
 
-    public static int playerTc = 10;
+    public static int playerTc = 40;
 	public int maxPlayerTc;
-    public static float TcRate = 2f;
+    public bool payerNearGenerator = false;
 
-    public override void TakeTc(int maxTcZone )
+    public override void TakeTc(int maxTcZone, float tcRate )
     {
-        StartCoroutine(PereodicPlusPlayerTC(TcRate, maxTcZone));
+        payerNearGenerator = true;
+        StartCoroutine(PereodicPlusPlayerTC(maxTcZone, tcRate));
     }
 
-    private IEnumerator PereodicPlusPlayerTC(float TcRate, int maxTcZone) 
+    public override void TakeStopCorutinTc(int maxTcZone, float tcRate)
     {
-        while (playerTc < maxTcZone)
+        payerNearGenerator = false;
+        StopCoroutine(PereodicPlusPlayerTC(maxTcZone, tcRate));
+    }
+
+    public IEnumerator PereodicPlusPlayerTC(int maxTcZone, float tcRate) 
+    {
+        while (playerTc < maxTcZone && payerNearGenerator == true)
         {
-            yield return new WaitForSeconds(TcRate);
+            yield return new WaitForSeconds(tcRate);
             playerTc++;
             Debug.Log(playerTc);
         }

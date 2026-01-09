@@ -610,7 +610,7 @@ GameObject:
   - component: {fileID: 489744564}
   m_Layer: 0
   m_Name: CoolGeneratorZone
-  m_TagString: Untagged
+  m_TagString: CoolGeneratorZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -664,6 +664,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestGeneratorZone
   maxTcZone: 50
+  tcRate: 2.5
 --- !u!1 &788939000
 GameObject:
   m_ObjectHideFlags: 0
@@ -1242,6 +1243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerTc
   maxPlayerTc: 100
+  payerNearGenerator: 0
 --- !u!1 &1821074723
 GameObject:
   m_ObjectHideFlags: 0
@@ -1551,7 +1553,7 @@ GameObject:
   - component: {fileID: 1906186154}
   m_Layer: 0
   m_Name: ComfortGeneratorZone
-  m_TagString: Untagged
+  m_TagString: ComfortGeneratorZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1605,6 +1607,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestGeneratorZone
   maxTcZone: 100
+  tcRate: 1
 --- !u!1 &2139942289
 GameObject:
   m_ObjectHideFlags: 0
