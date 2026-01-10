@@ -1551,6 +1551,7 @@ GameObject:
   - component: {fileID: 1906186152}
   - component: {fileID: 1906186153}
   - component: {fileID: 1906186154}
+  - component: {fileID: 1906186155}
   m_Layer: 0
   m_Name: ComfortGeneratorZone
   m_TagString: ComfortGeneratorZone
@@ -1608,6 +1609,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TestGeneratorZone
   maxTcZone: 100
   tcRate: 1
+--- !u!114 &1906186155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1906186151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f537815b7ec05f4185781490f9299a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ComfortGeneratorZone
+  newTcRate: 1
+  oldTcRate: 0
+  newMaxTcZone: 100
+  oldMaxTcZone: 0
+  homeGeneratorZone: {fileID: 489744561}
 --- !u!1 &2139942289
 GameObject:
   m_ObjectHideFlags: 0
