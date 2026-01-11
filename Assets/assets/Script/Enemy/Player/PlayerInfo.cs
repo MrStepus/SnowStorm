@@ -1,0 +1,9 @@
+using UnityEngine;
+
+public class PlayerInfo : MonoBehaviour
+{
+
+    public static int player—hills = 50;
+    public static int maxPlayerChills = 100;
+
+}

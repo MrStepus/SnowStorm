@@ -597,6 +597,98 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!1 &456894192
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 456894194}
+  - component: {fileID: 456894193}
+  m_Layer: 0
+  m_Name: Spline
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &456894193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 456894192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dab5c7d4c32e743048dfca98e2d5914f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Splines::UnityEngine.Splines.SplineContainer
+  m_Spline:
+    m_EditModeType: 1
+    m_Knots: []
+    m_MetaData: []
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
+  m_Splines:
+  - m_EditModeType: 1
+    m_Knots:
+    - Position:
+        x: 0
+        y: 0
+        z: 0
+      TangentIn:
+        x: -0
+        y: -0
+        z: -0
+      TangentOut:
+        x: 0
+        y: 0
+        z: 0
+      Rotation:
+        value:
+          x: 0
+          y: 0
+          z: 0
+          w: 1
+    m_MetaData:
+    - Mode: 0
+      Tension: 0.5
+    m_Closed: 0
+    m_IntData:
+      m_Data: []
+    m_FloatData:
+      m_Data: []
+    m_Float4Data:
+      m_Data: []
+    m_ObjectData:
+      m_Data: []
+  m_Knots:
+    m_KnotsLink: []
+--- !u!4 &456894194
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 456894192}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -466.56784, y: -0.0000018789851, z: -461.382}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &489744561
 GameObject:
   m_ObjectHideFlags: 0
@@ -663,8 +755,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e438618cd24d0f4093cbccb46b66c1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestGeneratorZone
-  maxTcZone: 50
-  tcRate: 2.5
+  index: 1
 --- !u!1 &788939000
 GameObject:
   m_ObjectHideFlags: 0
@@ -1215,7 +1306,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 112
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!114 &1368492964
 MonoBehaviour:
@@ -1242,8 +1333,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f82b622ea19966c4c91bf6683fcb5df8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerTc
-  maxPlayerTc: 100
   payerNearGenerator: 0
+  chillsActive: 1
 --- !u!1 &1821074723
 GameObject:
   m_ObjectHideFlags: 0
@@ -1551,7 +1642,6 @@ GameObject:
   - component: {fileID: 1906186152}
   - component: {fileID: 1906186153}
   - component: {fileID: 1906186154}
-  - component: {fileID: 1906186155}
   m_Layer: 0
   m_Name: ComfortGeneratorZone
   m_TagString: ComfortGeneratorZone
@@ -1607,25 +1697,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e438618cd24d0f4093cbccb46b66c1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestGeneratorZone
-  maxTcZone: 100
-  tcRate: 1
---- !u!114 &1906186155
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1906186151}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f537815b7ec05f4185781490f9299a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ComfortGeneratorZone
-  newTcRate: 1
-  oldTcRate: 0
-  newMaxTcZone: 100
-  oldMaxTcZone: 0
-  homeGeneratorZone: {fileID: 489744561}
+  index: 2
 --- !u!1 &2139942289
 GameObject:
   m_ObjectHideFlags: 0
@@ -1776,3 +1848,4 @@ SceneRoots:
   - {fileID: 788939001}
   - {fileID: 1319519444}
   - {fileID: 1842589298}
+  - {fileID: 456894194}

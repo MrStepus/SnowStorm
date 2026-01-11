@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class TestGeneratorZone : MonoBehaviour
 {
-    public int maxTcZone;
-    public float tcRate;
+    public int index; 
     private void OnTriggerEnter(Collider other)
     {
         var baseTC = other.GetComponent<BaseTc>();
@@ -14,7 +13,7 @@ public class TestGeneratorZone : MonoBehaviour
         {
             if (other.CompareTag("Enemy") || other.CompareTag("Player"))
             {
-                baseTC.TakeTc(maxTcZone, tcRate);
+                baseTC.TakeTc(index);
             }
         }
     }
@@ -27,7 +26,7 @@ public class TestGeneratorZone : MonoBehaviour
         {
             if (other.CompareTag("Enemy") || other.CompareTag("Player"))
             {
-                baseTC.TakeStopCorutinTc(maxTcZone, tcRate);
+                baseTC.TakeStopCorutinTc(index);
             }
         }
     }
