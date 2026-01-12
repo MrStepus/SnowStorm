@@ -3,7 +3,6 @@ using System.Collections;
 public class PlayerTc : BaseTc
 {
 
-	private int maxPlayerChills = 1000;
     private int zoneCounter = 0;
     private int oldIndex;
     
