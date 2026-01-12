@@ -10,6 +10,6 @@ public interface IReadOnlyInventory
     string ownerId { get;}
 
     int GetAmount(string itemId);
-    bool has(string itemId, int amount);
+    bool Has(string itemId, int amount);
 
 }
