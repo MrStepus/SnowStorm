@@ -6,7 +6,7 @@ public interface IReadOnlyInventoryGrid : IReadOnlyInventory
 
     event Action<Vector2Int> sizeChanged;
 
-    Vector2Int size { get; }
+    Vector2Int Size { get; }
 
     IReadOnlyInventorySlot[,] GetSlots();
 

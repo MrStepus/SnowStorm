@@ -8,7 +8,7 @@ public class InventoryGridData : MonoBehaviour
 {
 
     public string ownerId;
-    public List<InventorySlotData> Slot;
+    public List<InventorySlotData> Slots;
     public Vector2Int size;
 
 }
