@@ -46,6 +46,28 @@ public class InventoryGrid : MonoBehaviour, IReadOnlyInventoryGrid
         }
     }
 
+
+    public void AddItems(string itemId, int amount = 1)
+    {
+
+    }
+
+    public void AddItems(Vector2Int slotCords, string itemId, int amount = 1)
+    {
+
+    }
+
+    public void RemoveItems(string itemId, int amount = 1)
+    {
+
+    }
+
+    public void RempveItems(Vector2Int slotCords, string itemId, int amount = 1)
+    {
+
+    }
+
+
     public int GetAmount(string itemId)
     {
         throw new NotImplementedException();
