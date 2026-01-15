@@ -47,23 +47,74 @@ public class InventoryGrid : MonoBehaviour, IReadOnlyInventoryGrid
     }
 
 
-    public void AddItems(string itemId, int amount = 1)
+    public AddItemToInventoryGridResult AddItems(string itemId, int amount = 1)
+    {
+        var remainingAmount = amount;
+        var itemsAddedToSlotsWithSameItemsAmount = AddToSlotsWithSameItems(itemId, remainingAmount, out remainingAmount);
+
+        if (remainingAmount <= 0)
+        {
+            return new AddItemsToInvenroryGridResult();
+        }
+
+    }
+
+    public AddItemToInventoryGridResult AddItems(Vector2Int slotCords, string itemId, int amount = 1)
+    {
+
+        var slot = _slotsMap[slotCords];
+        var newValue = slot.amount + amount;
+        var itemsAddedAmount = 0;
+
+        if (slot.isEmpty)
+        {
+            slot.itemId = itemId;
+        }
+        
+        var itemSlotCapacity = GetItemSlotCapasity(itemId);
+
+        if (newValue > itemSlotCapacity)
+        {
+            var remainingItems = newValue - itemSlotCapacity;
+            var itemsToAddAmount = itemSlotCapacity - slot.amount;
+            itemsAddedAmount += itemsToAddAmount;
+            slot.amount = itemSlotCapacity;
+
+            var result = AddItems(itemId, remainingItems);
+            itemsAddedAmount += result.ItemsAddedAmount;
+        }
+        else
+        {
+            itemsAddedAmount = amount;
+            slot.amount = newValue;
+        }
+        return new AddItemToInventoryGridResult(ownerId, amount, itemsAddedAmount);
+
+    }
+
+    public RemoveItemsFromInventoryGridResult RemoveItems(string itemId, int amount = 1)
     {
 
     }
 
-    public void AddItems(Vector2Int slotCords, string itemId, int amount = 1)
+    public RemoveItemsFromInventoryGridResult RempveItems(Vector2Int slotCords, string itemId, int amount = 1)
     {
 
-    }
+        var slot = _slotsMap[slotCords];
 
-    public void RemoveItems(string itemId, int amount = 1)
-    {
+        if (slot.isEmpty || slot.itemId !=  itemId || slot.amount < amount)
+        {
+            return new RemoveItemsFromInventoryGridResult(ownerId, amount, false);
+        }
 
-    }
+        slot.amount -= amount;
 
-    public void RempveItems(Vector2Int slotCords, string itemId, int amount = 1)
-    {
+        if (slot.amount == 0)
+        {
+            slot.itemId = null;
+        }
+
+        return new RemoveItemsFromInventoryGridResult(ownerId, amount, true);
 
     }
 
@@ -92,5 +143,63 @@ public class InventoryGrid : MonoBehaviour, IReadOnlyInventoryGrid
         }
 
         return array;
-    }   
+    }
+
+    private int AddToSlotsWithSameItems(string itemId, int amount, out int remainingAmount)
+    {
+
+        var itemsAddedAmount = 0;
+        remainingAmount = amount;
+        
+        for (var x = 0; x < Size.x; x++)
+        {
+            for (var y = 0;  y < Size.y; y++)
+            {
+                var cords = new Vector2Int(x, y);
+                var slot = _slotsMap[cords];
+
+                if (slot.isEmpty)
+                {
+                    continue;    
+                }
+
+                var slotItemCopacity = GetItemSlotCapasity(slot.itemId);
+                if (slot.amount >= slotItemCopacity) { continue; }
+
+                if (slot.itemId != itemId) { continue; }
+
+                var newValue = slot.amount + remainingAmount;
+
+                if (newValue < slotItemCopacity)
+                {
+                    remainingAmount = newValue - slotItemCopacity;
+                    var itemsToAddAmount = slotItemCopacity - slot.amount;
+                    itemsAddedAmount += itemsToAddAmount;
+                    slot.amount = slotItemCopacity;
+
+                    if (remainingAmount == 0)
+                    {
+                        return itemsAddedAmount;
+                    }
+                }
+                else
+                {
+                    itemsAddedAmount += remainingAmount;
+                    slot.amount = newValue;
+                    remainingAmount = 0;
+
+                    return itemsAddedAmount;
+                }
+
+            }
+        }
+
+        return itemsAddedAmount;
+    }
+
+    private int GetItemSlotCapasity(string itemId)
+    {
+        return 99;
+    }
+
 }
