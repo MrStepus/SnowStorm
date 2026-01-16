@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using assets.Script.Inventory;
 
 public class InventoryGrid : MonoBehaviour, IReadOnlyInventoryGrid
 {
@@ -45,21 +46,24 @@ public class InventoryGrid : MonoBehaviour, IReadOnlyInventoryGrid
             }
         }
     }
-
-
-    public AddItemToInventoryGridResult AddItems(string itemId, int amount = 1)
+    
+    public AddItemsToInvenroryGridResult AddItems(string itemId, int amount = 1)
     {
         var remainingAmount = amount;
         var itemsAddedToSlotsWithSameItemsAmount = AddToSlotsWithSameItems(itemId, remainingAmount, out remainingAmount);
 
         if (remainingAmount <= 0)
         {
-            return new AddItemsToInvenroryGridResult();
+            return new AddItemsToInvenroryGridResult(ownerId, amount, itemsAddedToSlotsWithSameItemsAmount);
         }
-
+        
+        var itemsAddedToAvaibleSlotAmount = AddToFristAveilableSlots(itemId, remainingAmount, out remainingAmount);
+        var totalAddedItemsAmount = itemsAddedToSlotsWithSameItemsAmount + itemsAddedToAvaibleSlotAmount;
+        
+        return new AddItemsToInvenroryGridResult(ownerId, amount, totalAddedItemsAmount);
     }
 
-    public AddItemToInventoryGridResult AddItems(Vector2Int slotCords, string itemId, int amount = 1)
+    public AddItemsToInvenroryGridResult AddItems(Vector2Int slotCords, string itemId, int amount = 1)
     {
 
         var slot = _slotsMap[slotCords];
@@ -88,16 +92,50 @@ public class InventoryGrid : MonoBehaviour, IReadOnlyInventoryGrid
             itemsAddedAmount = amount;
             slot.amount = newValue;
         }
-        return new AddItemToInventoryGridResult(ownerId, amount, itemsAddedAmount);
+        return new AddItemsToInvenroryGridResult(ownerId, amount, itemsAddedAmount);
 
     }
 
     public RemoveItemsFromInventoryGridResult RemoveItems(string itemId, int amount = 1)
     {
+        if (!Has(itemId, amount))
+        {
+            return new RemoveItemsFromInventoryGridResult(ownerId, amount, false);
+        }
+        
+        var amountToRemove = amount;
 
+        for (var x = 0; x < Size.x; x++)
+        {
+            for (var y = 0; y < Size.y; y++)
+            {
+                var slotCords = new Vector2Int(x, y);
+                var slot = _slotsMap[slotCords];
+
+                if (slot.itemId != itemId)
+                {
+                    continue;
+                }
+
+                if (amountToRemove > slot.amount)
+                {
+                    amountToRemove -= slot.amount;
+                    
+                    RemoveItems(slotCords, itemId, slot.amount);
+                    
+                }
+                else
+                {
+                    RemoveItems(slotCords, itemId, amountToRemove);
+                    
+                    return new RemoveItemsFromInventoryGridResult(ownerId, amount, true);
+                }
+            }
+        }
+        throw new Exception("Something went wrong, couldn't remove some items");
     }
 
-    public RemoveItemsFromInventoryGridResult RempveItems(Vector2Int slotCords, string itemId, int amount = 1)
+    public RemoveItemsFromInventoryGridResult RemoveItems(Vector2Int slotCords, string itemId, int amount = 1)
     {
 
         var slot = _slotsMap[slotCords];
@@ -121,10 +159,39 @@ public class InventoryGrid : MonoBehaviour, IReadOnlyInventoryGrid
 
     public int GetAmount(string itemId)
     {
-        throw new NotImplementedException();
+        var amount = 0;
+        var slots = _data.Slots;
+
+        foreach (var slot in slots)
+        {
+            if (slot.itemId == itemId)
+            {
+                amount += slot.amount;
+            }
+        }
+        
+        return amount;
     }
 
     public bool Has(string itemId, int amount)
+    {
+        var amountExist = GetAmount(itemId);
+        return amountExist >= amount;
+    }
+
+    public void SwithSlots(Vector2Int slotCordsA, Vector2Int slotCordsB)
+    {
+        var slotA = _slotsMap[slotCordsA];
+        var slotB = _slotsMap[slotCordsB];
+        var tempSlotItemId = slotA.itemId;
+        var tempSlotItemAount = slotA.amount;
+        slotA.itemId = slotB.itemId;
+        slotA.amount = slotB.amount;
+        slotB.itemId = tempSlotItemId;
+        slotB.amount = tempSlotItemAount;
+    }
+
+    public void Setsize(Vector2Int newSize)
     {
         throw new NotImplementedException();
     }
@@ -194,6 +261,48 @@ public class InventoryGrid : MonoBehaviour, IReadOnlyInventoryGrid
             }
         }
 
+        return itemsAddedAmount;
+    }
+
+
+    private int AddToFristAveilableSlots(string itemId, int amount, out int remainingAmount)
+    {
+        var itemsAddedAmount = 0;
+        remainingAmount = amount;
+
+        for (var x = 0; x < Size.x; x++)
+        {
+            for (var y = 0; y < Size.y; y++)
+            {
+                var cords = new Vector2Int(x, y);
+                var slot = _slotsMap[cords];
+
+                if (slot.isEmpty)
+                {
+                    continue;
+                }
+                
+                slot.itemId = itemId;
+                var newValue = remainingAmount;
+                var slotItemCopacity = GetItemSlotCapasity(slot.itemId);
+
+                if (newValue > slotItemCopacity)
+                {
+                    remainingAmount = newValue - slotItemCopacity;
+                    var itemsToAddAmount = slotItemCopacity;
+                    itemsAddedAmount += itemsToAddAmount;
+                    slot.amount = slotItemCopacity;
+                }
+                else
+                {
+                    itemsAddedAmount += remainingAmount;
+                    slot.amount = newValue;
+                    remainingAmount = 0;
+                    
+                    return itemsAddedAmount;
+                }
+            }
+        }
         return itemsAddedAmount;
     }
 

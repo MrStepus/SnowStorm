@@ -2,20 +2,28 @@ using UnityEngine;
 
 public class InventoryGridView : MonoBehaviour
 {
+    private IReadOnlyInventoryGrid _inventory;
+    
     public void Setup(IReadOnlyInventoryGrid inventory)
     {
-        var slots = inventory.GetSlots();
-        var size = inventory.Size;
+        _inventory = inventory;
+        Print();
+    }
 
+    public void Print()
+    {
+        var slots = _inventory.GetSlots();
+        var size = _inventory.Size;
+        var result = "";
         for (var x = 0; x < size.x; x++)
         {
             for (var y = 0; y < size.y; y++)
             {
                 var slot = slots[x, y];
-
-                Debug.Log($"Slot ({x}, {y}). Item: {slot.itemId}, amount: {slot.amount} ");
+                result += $"Slot ({x}:{y}). Item: {slot.itemId}, amount: {slot.amount}\n";
             }
         }
-
+        
+        Debug.Log(result);
     }
 }
