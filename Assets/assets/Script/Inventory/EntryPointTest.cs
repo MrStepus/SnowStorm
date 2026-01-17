@@ -1,45 +1,72 @@
 using System.Collections.Generic;
 using assets.Script.Inventory;
+using assets.Script.Inventory.Controllers;
+using assets.Script.Inventory.Views;
 using UnityEngine;
 
 public class EntryPointTest : MonoBehaviour
 {
-    public InventoryGridView _view;
+    [SerializeField] private ScreenView _screenView;
     private InventoryService _inventoryService;
+    private ScreenController _screenController;
+    private string _cachedOwnerId;
+    private readonly string[] _itemIds = { "Tea", "Katan", "Amogus", "Masck" };
+
+    private const string Owner_1 = "MrStepus";
+    private const string Owner_2 = "X";
+    
 
     private void Start()
     {
         _inventoryService = new InventoryService();
-        var ownerId = "MrStepus";
-        var inventoryData =  CreateTestInventory(ownerId);
-        var inventory = _inventoryService.RegisterInventory(inventoryData);
         
-        _view.Setup(inventory);
-
-        var addedResult = _inventoryService.AddItemsToInventory(ownerId, "чай", 101);
-        Debug.Log($"я добавил в инвеентарь {addedResult.InventoryOwnerId}, предмет чай в количестве {addedResult.ItemsToAddAmount}. удалось добавить {addedResult.ItemsAddedAmount}");
-        addedResult = _inventoryService.AddItemsToInventory(ownerId, "сломаная катана?", 1); 
-        Debug.Log($"я добавил в инвеентарь {addedResult.InventoryOwnerId}, предмет сломаная катана? в количестве {addedResult.ItemsToAddAmount}. удалось добавить {addedResult.ItemsAddedAmount}");
+        var inventorydataMrStepus = CreateTestInventory(Owner_1);
+        _inventoryService.RegisterInventory(inventorydataMrStepus);
         
-        _view.Print();
+        var inventorydataX = CreateTestInventory(Owner_1);
+        _inventoryService.RegisterInventory(inventorydataX);
         
-        addedResult = _inventoryService.AddItemsToInventory(ownerId, "чай", 101);
-        Debug.Log($"я добавил в инвеентарь {addedResult.InventoryOwnerId}, предмет чай в количестве {addedResult.ItemsToAddAmount}. удалось добавить {addedResult.ItemsAddedAmount}");
-        addedResult = _inventoryService.AddItemsToInventory(ownerId, "дигл?", 1); 
-        Debug.Log($"я добавил в инвеентарь {addedResult.InventoryOwnerId}, предмет дигл? в количестве {addedResult.ItemsToAddAmount}. удалось добавить {addedResult.ItemsAddedAmount}");
-        
-        _view.Print();
-        
-        addedResult = _inventoryService.AddItemsToInventory(ownerId, "кислый мармелад", 10); 
-        Debug.Log($"я добавил в инвеентарь {addedResult.InventoryOwnerId}, предмет кислый мармелад в количестве {addedResult.ItemsToAddAmount}. удалось добавить {addedResult.ItemsAddedAmount}");
-        
-        _view.Print();
-        
-        var removeResult = _inventoryService.RemoveItems(ownerId, "кислый мармелад", 2); 
-        Debug.Log($"я съел из инвентаря {removeResult.InventoryOwnerId}, предмет кислый мармелад в количестве {removeResult.ItemsToRemoveAmount}. удалось ли? {removeResult.Success}");
-        
-        _view.Print();
+        _screenController = new ScreenController(_inventoryService, _screenView);
+        _screenController.OpenInvwntory(Owner_1);
+        _cachedOwnerId = Owner_1;
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            _screenController.OpenInvwntory(Owner_1);
+            _cachedOwnerId = Owner_1;
+        }
+        
+        if (Input.GetKeyDown(KeyCode.O))
+        {
+            _screenController.OpenInvwntory(Owner_2);
+            _cachedOwnerId = Owner_2;
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            var rIndex = Random.Range(0, _itemIds.Length);
+            var rItemId = _itemIds[rIndex];
+            var rAmount = Random.Range(1, 50);
+            var result = _inventoryService.AddItemsToInventory(_cachedOwnerId, rItemId, rAmount);
+            
+            Debug.Log($"Item added: ${rItemId}. Amount added: {result.ItemsAddedAmount}");
+        }
+        
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            var rIndex = Random.Range(0, _itemIds.Length);
+            var rItemId = _itemIds[rIndex];
+            var rAmount = Random.Range(1, 50);
+            var result = _inventoryService.RemoveItems(_cachedOwnerId, rItemId, rAmount);
+            
+            Debug.Log($"Item added: ${rItemId}. Amount added: {result.ItemsToRemoveAmount}, Success: {result.Success}");
+        }
+        
+    }
+    
 
     private InventoryGridData CreateTestInventory(string ownerId)
     {
