@@ -16,22 +16,27 @@ public class EntryPointTest : MonoBehaviour
         
         _view.Setup(inventory);
 
-        var addedResult = _inventoryService.AddItemsToInventory(ownerId, "????", 101);
-        Debug.Log($"? ??????? ? {addedResult}");
-        addedResult = _inventoryService.AddItemsToInventory(ownerId, "???????? ???????", 1); 
-        Debug.Log($"? ??????? ? {addedResult}");
+        var addedResult = _inventoryService.AddItemsToInventory(ownerId, "чай", 101);
+        Debug.Log($"я добавил в инвеентарь {addedResult.InventoryOwnerId}, предмет чай в количестве {addedResult.ItemsToAddAmount}. удалось добавить {addedResult.ItemsAddedAmount}");
+        addedResult = _inventoryService.AddItemsToInventory(ownerId, "сломаная катана?", 1); 
+        Debug.Log($"я добавил в инвеентарь {addedResult.InventoryOwnerId}, предмет сломаная катана? в количестве {addedResult.ItemsToAddAmount}. удалось добавить {addedResult.ItemsAddedAmount}");
         
         _view.Print();
         
-        addedResult = _inventoryService.AddItemsToInventory(ownerId, "????", 101);
-        Debug.Log($"? ??????? ? {addedResult}");
-        addedResult = _inventoryService.AddItemsToInventory(ownerId, "???????? ????", 1); 
-        Debug.Log($"? ??????? ? {addedResult}");
+        addedResult = _inventoryService.AddItemsToInventory(ownerId, "чай", 101);
+        Debug.Log($"я добавил в инвеентарь {addedResult.InventoryOwnerId}, предмет чай в количестве {addedResult.ItemsToAddAmount}. удалось добавить {addedResult.ItemsAddedAmount}");
+        addedResult = _inventoryService.AddItemsToInventory(ownerId, "дигл?", 1); 
+        Debug.Log($"я добавил в инвеентарь {addedResult.InventoryOwnerId}, предмет дигл? в количестве {addedResult.ItemsToAddAmount}. удалось добавить {addedResult.ItemsAddedAmount}");
         
         _view.Print();
         
-        addedResult = _inventoryService.AddItemsToInventory(ownerId, "????????", 10); 
-        Debug.Log($"? ??????? ? {addedResult}");
+        addedResult = _inventoryService.AddItemsToInventory(ownerId, "кислый мармелад", 10); 
+        Debug.Log($"я добавил в инвеентарь {addedResult.InventoryOwnerId}, предмет кислый мармелад в количестве {addedResult.ItemsToAddAmount}. удалось добавить {addedResult.ItemsAddedAmount}");
+        
+        _view.Print();
+        
+        var removeResult = _inventoryService.RemoveItems(ownerId, "кислый мармелад", 2); 
+        Debug.Log($"я съел из инвентаря {removeResult.InventoryOwnerId}, предмет кислый мармелад в количестве {removeResult.ItemsToRemoveAmount}. удалось ли? {removeResult.Success}");
         
         _view.Print();
     }
@@ -46,13 +51,13 @@ public class EntryPointTest : MonoBehaviour
             createdInventorySlots.Add(new InventorySlotData());
         }
 
-        var createdInventoruData = new InventoryGridData
+        var createdInventoryData = new InventoryGridData
         {
             ownerId = ownerId,
             size = size,
             Slots = createdInventorySlots
         };
         
-        return createdInventoruData;
+        return createdInventoryData;
     }
 }

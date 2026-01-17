@@ -237,7 +237,7 @@ public class InventoryGrid : MonoBehaviour, IReadOnlyInventoryGrid
 
                 var newValue = slot.amount + remainingAmount;
 
-                if (newValue < slotItemCopacity)
+                if (newValue > slotItemCopacity)
                 {
                     remainingAmount = newValue - slotItemCopacity;
                     var itemsToAddAmount = slotItemCopacity - slot.amount;
@@ -277,7 +277,7 @@ public class InventoryGrid : MonoBehaviour, IReadOnlyInventoryGrid
                 var cords = new Vector2Int(x, y);
                 var slot = _slotsMap[cords];
 
-                if (slot.isEmpty)
+                if (!slot.isEmpty)
                 {
                     continue;
                 }

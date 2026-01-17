@@ -1,11 +1,9 @@
 ﻿namespace assets.Script.Inventory
 {
-    using System;
     using System.Collections.Generic;
     using UnityEngine;
-    using assets.Script.Inventory;
     
-    public class InventoryService
+    public class InventoryService 
     {
         
         private readonly Dictionary< string, InventoryGrid>  _inventoriesMap = new();
