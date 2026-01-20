@@ -33,17 +33,6 @@ public class EntryPointTest : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            _screenController.OpenInvwntory(Owner_1);
-            _cachedOwnerId = Owner_1;
-        }
-        
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            _screenController.OpenInvwntory(Owner_2);
-            _cachedOwnerId = Owner_2;
-        }
 
         if (Input.GetKeyDown(KeyCode.E))
         {
