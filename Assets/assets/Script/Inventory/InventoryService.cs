@@ -3,9 +3,23 @@
     using System.Collections.Generic;
     using UnityEngine;
     
+    public class DragBuffer
+    {
+        public string ItemId;
+        public int Amount;
+        public bool IsEmpty => string.IsNullOrEmpty(ItemId);
+
+        public void Clear()
+        {
+            ItemId = null;
+            Amount = 0;
+        }
+    }
+    
     public class InventoryService 
     {
         
+        public DragBuffer CurrentBuffer { get; } = new DragBuffer();
         private readonly Dictionary< string, InventoryGrid>  _inventoriesMap = new();
 
         public InventoryGrid RegisterInventory(InventoryGridData inventoryData)
