@@ -6,11 +6,21 @@ public class InventorySlot : MonoBehaviour
     
     public int itemID;
     public int amount = 0;
+    public int itemMaxStack = 18;
     public string itemName;
+    public bool slotClosed = false;
     
     public TMP_Text titleText;
     public TMP_Text amountTitle;
 
+    private void Start()
+    {
+        titleText.text = itemName;
+        amountTitle.text = amount.ToString();
+    }
+    
+    
+    
     public void AddItem(int advancedItemId, int advancedAmount, string advancedItemName)
     {
         if (amount == 0)
