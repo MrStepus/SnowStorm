@@ -274,7 +274,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventorySlot
   itemID: 0
   amount: 0
+  itemMaxStack: 18
   itemName: 
+  slotClosed: 0
   titleText: {fileID: 2139424594612402249}
   amountTitle: {fileID: 5995267141039415987}
 --- !u!1 &4900288468186953234

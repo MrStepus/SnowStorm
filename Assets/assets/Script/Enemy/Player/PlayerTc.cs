@@ -82,7 +82,7 @@ public class PlayerTc : BaseTc
     {
         while (PlayerInfo.playerСhills < PlayerInfo.maxPlayerChills && chillsActive == true)
         {
-            yield return new WaitForSeconds(10f);
+            yield return new WaitForSeconds(20f);
             PlayerInfo.playerСhills++;
             Debug.Log(PlayerInfo.playerСhills);
         }

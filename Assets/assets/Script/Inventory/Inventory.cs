@@ -8,6 +8,7 @@ public class Inventory : MonoBehaviour
     public string inventoryName;
     
     public List<InventorySlot> _slots  = new List<InventorySlot>();
+    
 
     private void Start()
     {
@@ -15,20 +16,31 @@ public class Inventory : MonoBehaviour
         {
             Debug.Log($"Slot Id: {i} itemId {_slots[i].itemID} amount {_slots[i].amount} ItemName {_slots[i].itemName}");
         }
-        
-        AddItemForSlot(0, 1, "f");
-        AddItemForSlotById(0, 0, 1, "Пиво");
-        StartCoroutine(TimeStop());
+        AddItemForSlot(1, 10, "карась");
     }
     
     
     public void AddItemForSlot(int advancedItemId, int advancedAmount, string advancedItemName)
     {
+        
+        List<InventorySlot> emptySlots  = new List<InventorySlot>();
+        
         for (var i = 0; i < _slots.Count; i++)
         {
-
-            
-            
+            if (_slots[i].itemID == advancedItemId && _slots[i].amount < _slots[i].itemMaxStack)
+            {
+                emptySlots.Add(_slots[i]);
+                Debug.Log($"Слот: {i} занят таким же предметом, может подойти");
+            }
+            else if (_slots[i].itemID == 0)
+            {
+                emptySlots.Add(_slots[i]);     
+                Debug.Log($"Слот: {i} пуст он может подойти");
+            }
+            else
+            {
+                Debug.Log($"Слот: {i} занят, не подходит");
+            }
         }
     }
 
@@ -41,13 +53,30 @@ public class Inventory : MonoBehaviour
     
     public void RemoveItemForSlot(int itemRemoveId,  int removeAmount)
     {
-        for (var i = 0; i < _slots.Count; i++)
+        for (int i = 0; i < _slots.Count; i++)
         {
             if (_slots[i].itemID == itemRemoveId)
             {
-                _slots[i].RemoveItem(removeAmount);
-                Debug.Log($"SlotId: {_slots[i]}  itemIdRemoved {_slots[i].itemID} New Amount {_slots[i].amount}");
+                if (_slots[i].amount >= removeAmount)
+                { 
+                    _slots[i].RemoveItem(removeAmount); 
+                    Debug.Log($"SlotId: {_slots[i]}  itemIdRemoved {_slots[i].itemID} New Amount {_slots[i].amount}");
+                }
+                else
+                {
+                    removeAmount -= _slots[i].amount ;
+                    _slots[i].RemoveItem(_slots[i].amount);
+                }
             }
+        }
+
+        if (removeAmount == 0)
+        {
+            return;
+        }
+        else
+        {
+            Debug.Log("Хабара не достаточно Вьюжник...");
         }
     }
     
@@ -61,7 +90,7 @@ public class Inventory : MonoBehaviour
     public IEnumerator TimeStop()
     {
         yield return new WaitForSeconds(3f);
-        RemoveItemForSlot(2, 1);
+        RemoveItemForSlot(2, 10);
     }
 
 }
