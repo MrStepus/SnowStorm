@@ -1043,6 +1043,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8637205188964776883, guid: d5747fc4aa6e62e4b90a8ffe12729502, type: 3}
+      propertyPath: slotId
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2145,15 +2149,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8637205188964776883, guid: d5747fc4aa6e62e4b90a8ffe12729502, type: 3}
       propertyPath: amount
-      value: 0
+      value: 17
       objectReference: {fileID: 0}
     - target: {fileID: 8637205188964776883, guid: d5747fc4aa6e62e4b90a8ffe12729502, type: 3}
       propertyPath: itemID
-      value: 3
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8637205188964776883, guid: d5747fc4aa6e62e4b90a8ffe12729502, type: 3}
+      propertyPath: slotId
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8637205188964776883, guid: d5747fc4aa6e62e4b90a8ffe12729502, type: 3}
       propertyPath: itemName
-      value: 
+      value: "\u043A\u0430\u0440\u0430\u0441\u044C"
       objectReference: {fileID: 0}
     - target: {fileID: 8637205188964776883, guid: d5747fc4aa6e62e4b90a8ffe12729502, type: 3}
       propertyPath: slotClosed
@@ -2668,6 +2676,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8637205188964776883, guid: d5747fc4aa6e62e4b90a8ffe12729502, type: 3}
+      propertyPath: amount
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 8637205188964776883, guid: d5747fc4aa6e62e4b90a8ffe12729502, type: 3}
       propertyPath: itemID
       value: 1
       objectReference: {fileID: 0}
@@ -2846,6 +2858,14 @@ PrefabInstance:
     - target: {fileID: 8637205188964776883, guid: d5747fc4aa6e62e4b90a8ffe12729502, type: 3}
       propertyPath: itemID
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8637205188964776883, guid: d5747fc4aa6e62e4b90a8ffe12729502, type: 3}
+      propertyPath: slotId
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8637205188964776883, guid: d5747fc4aa6e62e4b90a8ffe12729502, type: 3}
+      propertyPath: itemName
+      value: "\u043A\u0430\u0440\u0430\u0441\u044C"
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

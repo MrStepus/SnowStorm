@@ -8,7 +8,8 @@ public class InventorySlot : MonoBehaviour
     public int amount = 0;
     public int itemMaxStack = 18;
     public string itemName;
-    public bool slotClosed = false;
+
+    public int slotId;
     
     public TMP_Text titleText;
     public TMP_Text amountTitle;

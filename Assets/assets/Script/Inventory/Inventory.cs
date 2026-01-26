@@ -14,7 +14,7 @@ public class Inventory : MonoBehaviour
     {
         for (var i = 0; i < _slots.Count; i++)
         {
-            Debug.Log($"Slot Id: {i} itemId {_slots[i].itemID} amount {_slots[i].amount} ItemName {_slots[i].itemName}");
+            Debug.Log($"Slot Id: {_slots[i].slotId} itemId {_slots[i].itemID} amount {_slots[i].amount} ItemName {_slots[i].itemName}");
         }
         AddItemForSlot(1, 10, "карась");
     }
@@ -30,17 +30,56 @@ public class Inventory : MonoBehaviour
             if (_slots[i].itemID == advancedItemId && _slots[i].amount < _slots[i].itemMaxStack)
             {
                 emptySlots.Add(_slots[i]);
-                Debug.Log($"Слот: {i} занят таким же предметом, может подойти");
+                Debug.Log($"Слот: {_slots[i].slotId} занят таким же предметом, может подойти");
             }
             else if (_slots[i].itemID == 0)
             {
                 emptySlots.Add(_slots[i]);     
-                Debug.Log($"Слот: {i} пуст он может подойти");
+                Debug.Log($"Слот: {_slots[i].slotId} пуст он может подойти");
             }
             else
             {
-                Debug.Log($"Слот: {i} занят, не подходит");
+                Debug.Log($"Слот: {_slots[i].slotId} занят, не подходит");
             }
+        }
+        
+        emptySlots.Sort((a, b) => {
+            if (a.itemID == advancedItemId && b.itemID == 0) return -1;
+            if (a.itemID == 0 && b.itemID == advancedItemId) return 1;
+            
+            return a.amount.CompareTo(b.amount);
+        });
+        
+        for (var y = 0; y < emptySlots.Count; y++)
+        {
+            
+            var comparable =  emptySlots[y].itemMaxStack - emptySlots[y].amount;
+            
+            if (comparable >= advancedAmount)
+            { 
+                emptySlots[y].AddItem(advancedItemId, advancedAmount, advancedItemName); 
+                Debug.Log($"Slot Id: {emptySlots[y].slotId} itemId {emptySlots[y].itemID} amount {emptySlots[y].amount} ItemName {emptySlots[y].itemName}");
+                advancedAmount = 0;
+                break;
+            }
+            else
+            {
+                int toAdd = Mathf.Min(comparable, advancedAmount);
+                emptySlots[y].AddItem(advancedItemId, toAdd, advancedItemName); 
+                advancedAmount -= toAdd;
+                if (advancedAmount < 0)  advancedAmount = 0;
+            }
+            
+            Debug.Log($"Slot Id: {emptySlots[y].slotId} itemId {emptySlots[y].itemID} amount {emptySlots[y].amount} ItemName {emptySlots[y].itemName}");
+        }
+        
+        if (advancedAmount == 0)
+        {
+            return;
+        }
+        else
+        {
+            Debug.Log("Места не достаточно Вьюжник...");
         }
     }
 
@@ -60,7 +99,7 @@ public class Inventory : MonoBehaviour
                 if (_slots[i].amount >= removeAmount)
                 { 
                     _slots[i].RemoveItem(removeAmount); 
-                    Debug.Log($"SlotId: {_slots[i]}  itemIdRemoved {_slots[i].itemID} New Amount {_slots[i].amount}");
+                    Debug.Log($"SlotId: {_slots[i].slotId}  itemIdRemoved {_slots[i].itemID} New Amount {_slots[i].amount}");
                 }
                 else
                 {
@@ -83,7 +122,7 @@ public class Inventory : MonoBehaviour
     public void RemoveItemForSlotById(int removeItemToSlotId, int removeAmount)
     {
         _slots[removeItemToSlotId].RemoveItem(removeAmount);
-        Debug.Log($"SlotId: {_slots[removeItemToSlotId]}  itemIdRemoved {_slots[removeItemToSlotId].itemID} New Amount {_slots[removeItemToSlotId].amount}");
+        Debug.Log($"SlotId: {_slots[removeItemToSlotId].slotId}  itemIdRemoved {_slots[removeItemToSlotId].itemID} New Amount {_slots[removeItemToSlotId].amount}");
     }
 
 
