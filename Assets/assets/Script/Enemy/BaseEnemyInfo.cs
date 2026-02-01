@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class BaseEnemyInfo : MonoBehaviour
+public interface IBaseEnemyInfo
 {
     public abstract void TakeDamage(int damage);
 }

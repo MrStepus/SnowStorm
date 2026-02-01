@@ -7,22 +7,16 @@ public class TestGeneratorZone : MonoBehaviour
     public int index; 
     private void OnTriggerEnter(Collider other)
     {
-        var baseTC = other.GetComponent<BaseTc>();
-
-        if (baseTC != null)
-        {
-            if (other.CompareTag("Enemy") || other.CompareTag("Player"))
-            {
-                baseTC.TakeTc(index);
-            }
+        if (other.TryGetComponent<IBaseTc>(out var baseTC))
+        { 
+            baseTC.TakeTc(index);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        var baseTC = other.GetComponent<BaseTc>();
 
-        if (baseTC != null)
+        if (other.TryGetComponent<IBaseTc>(out var baseTC))
         {
             if (other.CompareTag("Enemy") || other.CompareTag("Player"))
             {

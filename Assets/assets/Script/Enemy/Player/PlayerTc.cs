@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
-public class PlayerTc : BaseTc
+public class PlayerTc : MonoBehaviour, IBaseTc
 {
 
     private int zoneCounter = 0;
@@ -18,7 +18,7 @@ public class PlayerTc : BaseTc
         corutinChillsActive = StartCoroutine(Chills());
     }
 
-    public override void TakeTc(int index)
+    public void TakeTc(int index)
     {
         switch (zoneCounter)
         {
@@ -37,7 +37,7 @@ public class PlayerTc : BaseTc
         }
     }
 
-    public override void TakeStopCorutinTc(int index)
+    public void TakeStopCorutinTc(int index)
     {
         switch (zoneCounter)
         {

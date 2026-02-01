@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerStats : BaseEnemyInfo
+public class PlayerStats : MonoBehaviour, IBaseEnemyInfo
 {
     public int maxHp;
     public static int hp;
@@ -10,7 +10,7 @@ public class PlayerStats : BaseEnemyInfo
         hp = maxHp;
     }
 
-    public override void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         hp -= damage;
     }

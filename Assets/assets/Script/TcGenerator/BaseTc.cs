@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class BaseTc : MonoBehaviour
+public interface IBaseTc
 {
     public abstract void TakeTc(int index);
     public abstract void TakeStopCorutinTc(int index);
