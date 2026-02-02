@@ -259,7 +259,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6445386307067216953}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3779175252041347107}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8637205188964776883
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,7 +288,7 @@ MonoBehaviour:
   amount: 0
   itemMaxStack: 18
   itemName: 
-  slotClosed: 0
+  slotId: 0
   titleText: {fileID: 2139424594612402249}
   amountTitle: {fileID: 5995267141039415987}
 --- !u!1 &4900288468186953234

@@ -59,5 +59,11 @@ public class InventorySlot : MonoBehaviour
         }
         
     }
+
+    public void DragItem(int dragAmount)
+    {
+        
+    }
+    
     
 }
