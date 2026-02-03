@@ -1,3 +1,4 @@
+using assets.Script.Inventory.DragManager;
 using TMPro;
 using UnityEngine;
 
@@ -13,6 +14,8 @@ public class InventorySlot : MonoBehaviour
     
     public TMP_Text titleText;
     public TMP_Text amountTitle;
+    
+    public DragManager dragManager;
 
     private void Start()
     {
@@ -60,8 +63,21 @@ public class InventorySlot : MonoBehaviour
         
     }
 
-    public void DragItem(int dragAmount)
+    public void DragAndDropItem()
     {
+
+        switch (dragManager.emptyDragCursor)
+        {
+            
+            case true:
+                dragManager.ItemDragSlot(amount, itemName, itemID, itemMaxStack, slotId);                
+                break;
+            
+            case false:
+                dragManager.ItemDropSlot(amount, itemName, itemID, itemMaxStack, slotId);
+                break;
+            
+        }
         
     }
     

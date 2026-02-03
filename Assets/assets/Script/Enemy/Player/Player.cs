@@ -50,7 +50,6 @@ public class Player : MonoBehaviour
         {
             case false:
                 inventory.SetActive(true); 
-                dragCursor.SetActive(true);
                 inventoryOpenend = true;
                 break;
             

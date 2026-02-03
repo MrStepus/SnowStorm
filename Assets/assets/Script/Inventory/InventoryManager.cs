@@ -1,11 +1,14 @@
 using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
+using assets.Script.Inventory.DragManager;
 
-public class Inventory : MonoBehaviour
+public class InventoryManager : MonoBehaviour
 {
     
     public string inventoryName;
+    
+    public DragManager DragManager;
     
     public List<InventorySlot> _slots  = new List<InventorySlot>();
     
@@ -14,6 +17,7 @@ public class Inventory : MonoBehaviour
     {
         for (var i = 0; i < _slots.Count; i++)
         {
+            _slots[i].dragManager = DragManager;
             Debug.Log($"Slot Id: {_slots[i].slotId} itemId {_slots[i].itemID} amount {_slots[i].amount} ItemName {_slots[i].itemName}");
         }
         AddItemForSlot(1, 10, "карась");

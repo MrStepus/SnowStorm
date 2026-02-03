@@ -15,8 +15,26 @@ public class DragCursor : MonoBehaviour
 
     private void Awake() => Instance = this;
 
+    private void Start()
+    {
+        gameObject.SetActive(false);
+    }
+
     private void Update()
     {
         transform.position = Mouse.current.position.ReadValue();
     }
+    
+    public void setDragCursor(int amount)
+    {
+        _amountText.text = amount.ToString();
+        gameObject.SetActive(true);
+    }
+
+    public void clearDragCursor()
+    {
+        _amountText.text = "";
+        gameObject.SetActive(false);
+    }
+    
 }
