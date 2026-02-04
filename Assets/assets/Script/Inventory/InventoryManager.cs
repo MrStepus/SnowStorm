@@ -21,6 +21,7 @@ public class InventoryManager : MonoBehaviour
             Debug.Log($"Slot Id: {_slots[i].slotId} itemId {_slots[i].itemID} amount {_slots[i].amount} ItemName {_slots[i].itemName}");
         }
         AddItemForSlot(1, 10, "карась");
+        AddItemForSlot(2, 11, "пиво");
     }
     
     

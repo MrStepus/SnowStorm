@@ -10,6 +10,7 @@ namespace assets.Script.Inventory.DragManager
         public bool emptyDragCursor  = true;
         
         public int dragAmount;
+        public int bAmount;
 
         public string aName;
         public string bName;
@@ -17,7 +18,8 @@ namespace assets.Script.Inventory.DragManager
         public int aItemID;
         public int bItemID;
         
-        public int itemMaxStack;
+        public int aItemMaxStack;
+        public int bItemMaxStack;
         
         public int aSlotID;
         public int bSlotID;
@@ -30,16 +32,19 @@ namespace assets.Script.Inventory.DragManager
             dragAmount = amount;
             aName = itemName;
             aItemID = itemID;
-            itemMaxStack = maxItemStack;
+            aItemMaxStack = maxItemStack;
             aSlotID = slotID;
             
             inv._slots[slotID].itemID = 0;
             inv._slots[slotID].itemName = " ";
             inv._slots[slotID].titleText.text = "";
             inv._slots[slotID].amount = 0;
-            inv._slots[slotID].amountTitle.text = inv._slots[slotID].amount.ToString(); 
-            
-            dragCursor.setDragCursor(dragAmount);
+            inv._slots[slotID].amountTitle.text = inv._slots[slotID].amount.ToString();
+
+            if (dragAmount != 0)
+            {
+                dragCursor.setDragCursor(dragAmount);                
+            }
             
         }
 
@@ -48,13 +53,42 @@ namespace assets.Script.Inventory.DragManager
 
             if (inv._slots[slotID].itemID == 0)
             {
-                inv._slots[slotID].AddItem(itemID, dragAmount, aName);
+                inv._slots[slotID].AddItem(aItemID, dragAmount, aName);
+                emptyDragCursor = true;            
+                dragCursor.clearDragCursor();
+            }
+
+            if (inv._slots[slotID].itemID != 0 && inv._slots[slotID].itemID != aItemID)
+            { 
+                ItemSwap(amount, itemName, itemID, maxItemStack, slotID);  
             }
             
-            emptyDragCursor = true;
-            dragCursor.clearDragCursor();
+            
             
         }
 
+        public void ItemSwap(int amount, string itemName, int itemID, int maxItemStack, int slotID)
+        {
+            
+            bName = itemName;
+            bItemID = itemID;
+            bItemMaxStack = maxItemStack;
+            bAmount = amount;
+            
+            inv._slots[slotID].itemName = aName;
+            inv._slots[slotID].itemID = aItemID;
+            inv._slots[slotID].itemMaxStack = aItemMaxStack;
+            inv._slots[slotID].amount = dragAmount;
+            inv._slots[slotID].titleText.text = inv._slots[slotID].itemName;
+            inv._slots[slotID].amountTitle.text = inv._slots[slotID].amount.ToString();
+            
+            aName = bName;
+            aItemID = bItemID;
+            aItemMaxStack = bItemMaxStack;
+            dragAmount = bAmount;
+            
+            dragCursor.setDragCursor(dragAmount);            
+        }
+        
     }
 }
