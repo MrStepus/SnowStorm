@@ -1,0 +1,7 @@
+﻿{
+  "items": [
+    { "id": 26050102, "displayName": "Tea", "maxStack": 5 },
+    { "id": 26050202, "displayName": "Katana", "maxStack": 1 },
+    { "id": 26050302, "displayName": "Brear", "maxStack": 5 }
+  ]
+}
