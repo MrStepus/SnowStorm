@@ -32,10 +32,11 @@ public class InventorySlot : MonoBehaviour
             itemID = advancedItemId;
             amount = advancedAmount;
         }
-        else
+        else if (itemID == advancedItemId)  
         {
             amount += advancedAmount;
         }
+
         
         UpdateUI();
     }

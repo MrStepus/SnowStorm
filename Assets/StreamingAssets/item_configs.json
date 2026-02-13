@@ -4,7 +4,7 @@
       "id": 11111111,
       "displayName": " ",
       "maxStack": 0,
-      "itemType": "any"
+      "itemType": "all"
     },
     { 
       "id": 26050102, 
@@ -27,7 +27,7 @@
     {
       "id": 26110402,
       "displayName": "Уголь",
-      "maxStack": 6,
+      "maxStack": 8,
       "itemType": "resources"
     },
     {

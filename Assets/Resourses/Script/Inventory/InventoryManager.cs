@@ -13,23 +13,23 @@ public class InventoryManager : MonoBehaviour
     [Header("Настройки инвентаря")]
     public string inventoryName;
     
-    public DragManager DragManager;
+    public DragManager dragManager;
     
     public List<InventorySlot> _slots = new List<InventorySlot>();
     
     private void Start()
     {
+       ItemDatabase.Load();
         // Инициализация слотов
         for (var i = 0; i < _slots.Count; i++)
         {
-            _slots[i].dragManager = DragManager;
+            _slots[i].dragManager = dragManager;
             _slots[i].slotId = i;
             
             // ===== НОВОЕ: привязываем слот к этому инвентарю =====
-            _slots[i].parentInventory = this; 
+            _slots[i].parentInventory = this;
+            
         }
-
-        Debug.Log(_slots.Count);
         
         AddItemForSlot(26050102, 2);
         AddItemForSlot(26050102, 2);
@@ -42,13 +42,13 @@ public class InventoryManager : MonoBehaviour
         
         for (var i = 0; i < _slots.Count; i++)
         {
-            var conf = ItemDatabase.GetConfig(_slots[i].itemID);
-            if (_slots[i].itemID == advancedItemId && _slots[i].amount < conf.maxStack)
+            var conf = ItemDatabase.GetConfig(advancedItemId);
+            if (_slots[i].itemID == advancedItemId && _slots[i].amount < conf.maxStack && _slots[i].slotType == conf.itemType || _slots[i].slotType == "any")
             {
                 emptySlots.Add(_slots[i]);
                 Debug.Log($"[{ownerId}] Слот: {_slots[i].slotId} занят таким же предметом, может подойти");
             }
-            else if (_slots[i].itemID == 11111111)
+            else if (_slots[i].itemID == 11111111 && _slots[i].slotType == conf.itemType || _slots[i].slotType == "any")
             {
                 emptySlots.Add(_slots[i]);     
                 Debug.Log($"[{ownerId}] Слот: {_slots[i].slotId} пуст он может подойти");
@@ -67,13 +67,7 @@ public class InventoryManager : MonoBehaviour
         
         for (var y = 0; y < emptySlots.Count; y++)
         {
-            var conf = ItemDatabase.GetConfig(emptySlots[y].itemID);
-            if (conf == null)
-            {
-                Debug.LogError($"[{ownerId}] Предмет {advancedItemId} не найден в ItemDatabase!");
-                return;
-            }
-            
+            var conf = ItemDatabase.GetConfig(advancedItemId);
             var comparable = conf.maxStack - emptySlots[y].amount;
             
             if (comparable >= advancedAmount)
@@ -88,7 +82,7 @@ public class InventoryManager : MonoBehaviour
                 int toAdd = Mathf.Min(comparable, advancedAmount);
                 emptySlots[y].AddItem(advancedItemId, toAdd); 
                 advancedAmount -= toAdd;
-                if (advancedAmount <= 0) advancedAmount = 0;
+                if (advancedAmount < 0) advancedAmount = 0;
             }
             
             Debug.Log($"[{ownerId}] Slot Id: {emptySlots[y].slotId} itemId {emptySlots[y].itemID} amount {emptySlots[y].amount} ItemName {conf.displayName}");
@@ -106,8 +100,8 @@ public class InventoryManager : MonoBehaviour
 
     public void AddItemForSlotById(int slotId, int advancedItemId, int advancedAmount)
     {
-        var conf = ItemDatabase.GetConfig(slotId);
         _slots[slotId].AddItem(advancedItemId, advancedAmount);
+        var conf = ItemDatabase.GetConfig(_slots[slotId].itemID);
         Debug.Log($"[{ownerId}] Slot Id: {_slots[slotId]} itemIdAdded {_slots[slotId].itemID} amountAdded {_slots[slotId].amount} ItemNameAdded {conf.displayName}");
     }
     

@@ -3,8 +3,10 @@ using UnityEngine;
 
 namespace assets.Script.Inventory
 {
+    /// <summary>
     /// Простой сервис для управления несколькими инвентарями
     /// Каждый инвентарь привязан к своему владельцу (ownerId)
+    /// </summary>
     public class SimpleInventoryService : MonoBehaviour
     {
         public static SimpleInventoryService Instance { get; private set; }
@@ -24,11 +26,13 @@ namespace assets.Script.Inventory
             {
                 Destroy(gameObject);
             }
-            
-            ItemDatabase.Load();
         }
-        
+
+        /// <summary>
         /// Регистрирует новый инвентарь в системе
+        /// </summary>
+        /// <param name="ownerId">ID владельца (например: "Player", "Chest_1", "Merchant")</param>
+        /// <param name="inventory">Ссылка на InventoryManager</param>
         public void RegisterInventory(string ownerId, InventoryManager inventory)
         {
             if (_inventories.ContainsKey(ownerId))
@@ -41,8 +45,10 @@ namespace assets.Script.Inventory
             inventory.ownerId = ownerId; // Устанавливаем ownerId в самом инвентаре
             Debug.Log($"Инвентарь '{ownerId}' зарегистрирован!");
         }
-        
+
+        /// <summary>
         /// Получить инвентарь по ID владельца
+        /// </summary>
         public InventoryManager GetInventory(string ownerId)
         {
             if (_inventories.TryGetValue(ownerId, out InventoryManager inventory))
@@ -53,8 +59,10 @@ namespace assets.Script.Inventory
             Debug.LogError($"Инвентарь с ownerId '{ownerId}' не найден!");
             return null;
         }
-        
+
+        /// <summary>
         /// Добавить предмет в конкретный инвентарь
+        /// </summary>
         public void AddItemToInventory(string ownerId, int itemId, int amount)
         {
             var inventory = GetInventory(ownerId);
@@ -63,8 +71,10 @@ namespace assets.Script.Inventory
                 inventory.AddItemForSlot(itemId, amount);
             }
         }
-        
+
+        /// <summary>
         /// Удалить предмет из конкретного инвентаря
+        /// </summary>
         public void RemoveItemFromInventory(string ownerId, int itemId, int amount)
         {
             var inventory = GetInventory(ownerId);
@@ -73,8 +83,10 @@ namespace assets.Script.Inventory
                 inventory.RemoveItemForSlot(itemId, amount);
             }
         }
-        
+
+        /// <summary>
         /// Открыть/показать конкретный инвентарь
+        /// </summary>
         public void OpenInventory(string ownerId)
         {
             // Сначала скрываем все инвентари
@@ -91,8 +103,10 @@ namespace assets.Script.Inventory
                 Debug.Log($"Открыт инвентарь '{ownerId}'");
             }
         }
-        
+
+        /// <summary>
         /// Закрыть все инвентари
+        /// </summary>
         public void CloseAllInventories()
         {
             foreach (var inv in _inventories.Values)
@@ -100,8 +114,10 @@ namespace assets.Script.Inventory
                 inv.gameObject.SetActive(false);
             }
         }
-        
+
+        /// <summary>
         /// Проверить, есть ли в инвентаре определённое количество предмета
+        /// </summary>
         public bool HasItem(string ownerId, int itemId, int amount)
         {
             var inventory = GetInventory(ownerId);
@@ -118,8 +134,10 @@ namespace assets.Script.Inventory
 
             return totalAmount >= amount;
         }
-        
+
+        /// <summary>
         /// Получить общее количество предмета в инвентаре
+        /// </summary>
         public int GetItemAmount(string ownerId, int itemId)
         {
             var inventory = GetInventory(ownerId);
