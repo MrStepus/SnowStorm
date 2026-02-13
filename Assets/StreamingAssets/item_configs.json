@@ -2,38 +2,45 @@
   "items": [
     {
       "id": 11111111,
-      "displayName": "Шаблон",
-      "maxStack": 18
+      "displayName": " ",
+      "maxStack": 0,
+      "itemType": "all"
     },
     { 
       "id": 26050102, 
       "displayName": "Tea",
-      "maxStack": 5
+      "maxStack": 5,
+      "itemType": "food"
     },
     { 
       "id": 26050202, 
       "displayName": "Katana", 
-      "maxStack": 1
+      "maxStack": 1,
+      "itemType": "weapon"
     },
     { 
       "id": 26050302, 
       "displayName": "Brear", 
-      "maxStack": 5
+      "maxStack": 5,
+      "itemType": "food"
     },
     {
       "id": 26110402,
       "displayName": "Уголь",
-      "maxStack": 6
+      "maxStack": 8,
+      "itemType": "resources"
     },
     {
       "id": 26110502,
       "displayName": "Шоколадка",
-      "maxStack": 10
+      "maxStack": 10,
+      "itemType": "food"
     },
     {
       "id": 26110602,
       "displayName": "Патроны 5.45х20",
-      "maxStack": 5
+      "maxStack": 5,
+      "itemType": "shells"
     }
   ]
 }

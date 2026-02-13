@@ -13,27 +13,27 @@ public class InventoryManager : MonoBehaviour
     [Header("Настройки инвентаря")]
     public string inventoryName;
     
-    public DragManager DragManager;
+    public DragManager dragManager;
     
     public List<InventorySlot> _slots = new List<InventorySlot>();
     
     private void Start()
     {
+       ItemDatabase.Load();
         // Инициализация слотов
         for (var i = 0; i < _slots.Count; i++)
         {
-            _slots[i].dragManager = DragManager;
+            _slots[i].dragManager = dragManager;
             _slots[i].slotId = i;
             
             // ===== НОВОЕ: привязываем слот к этому инвентарю =====
             _slots[i].parentInventory = this;
             
-            Debug.Log($"[{ownerId}] Slot Id: {_slots[i].slotId} itemId {_slots[i].itemID} amount {_slots[i].amount} ItemName {_slots[i].itemName}");
         }
         
         AddItemForSlot(26050102, 2);
         AddItemForSlot(26050102, 2);
-        AddItemForSlotById(5, 26050202, 1, "ааа") ;
+        AddItemForSlotById(5, 26050202, 1) ;
     }
     
     public void AddItemForSlot(int advancedItemId, int advancedAmount)
@@ -42,12 +42,13 @@ public class InventoryManager : MonoBehaviour
         
         for (var i = 0; i < _slots.Count; i++)
         {
-            if (_slots[i].itemID == advancedItemId && _slots[i].amount < _slots[i].itemMaxStack)
+            var conf = ItemDatabase.GetConfig(advancedItemId);
+            if (_slots[i].itemID == advancedItemId && _slots[i].amount < conf.maxStack && _slots[i].slotType == conf.itemType || _slots[i].slotType == "any")
             {
                 emptySlots.Add(_slots[i]);
                 Debug.Log($"[{ownerId}] Слот: {_slots[i].slotId} занят таким же предметом, может подойти");
             }
-            else if (_slots[i].itemID == 0)
+            else if (_slots[i].itemID == 11111111 && _slots[i].slotType == conf.itemType || _slots[i].slotType == "any")
             {
                 emptySlots.Add(_slots[i]);     
                 Debug.Log($"[{ownerId}] Слот: {_slots[i].slotId} пуст он может подойти");
@@ -59,19 +60,20 @@ public class InventoryManager : MonoBehaviour
         }
         
         emptySlots.Sort((a, b) => {
-            if (a.itemID == advancedItemId && b.itemID == 0) return -1;
-            if (a.itemID == 0 && b.itemID == advancedItemId) return 1;
+            if (a.itemID == advancedItemId && b.itemID == 11111111) return -1;
+            if (a.itemID == 11111111 && b.itemID == advancedItemId) return 1;
             return a.amount.CompareTo(b.amount);
         });
         
         for (var y = 0; y < emptySlots.Count; y++)
         {
-            var comparable = emptySlots[y].itemMaxStack - emptySlots[y].amount;
+            var conf = ItemDatabase.GetConfig(advancedItemId);
+            var comparable = conf.maxStack - emptySlots[y].amount;
             
             if (comparable >= advancedAmount)
             { 
                 emptySlots[y].AddItem(advancedItemId, advancedAmount); 
-                Debug.Log($"[{ownerId}] Slot Id: {emptySlots[y].slotId} itemId {emptySlots[y].itemID} amount {emptySlots[y].amount} ItemName {emptySlots[y].itemName}");
+                Debug.Log($"[{ownerId}] Slot Id: {emptySlots[y].slotId} itemId {emptySlots[y].itemID} amount {emptySlots[y].amount} ItemName {conf.displayName}");
                 advancedAmount = 0;
                 break;
             }
@@ -83,7 +85,7 @@ public class InventoryManager : MonoBehaviour
                 if (advancedAmount < 0) advancedAmount = 0;
             }
             
-            Debug.Log($"[{ownerId}] Slot Id: {emptySlots[y].slotId} itemId {emptySlots[y].itemID} amount {emptySlots[y].amount} ItemName {emptySlots[y].itemName}");
+            Debug.Log($"[{ownerId}] Slot Id: {emptySlots[y].slotId} itemId {emptySlots[y].itemID} amount {emptySlots[y].amount} ItemName {conf.displayName}");
         }
         
         if (advancedAmount == 0)
@@ -96,10 +98,11 @@ public class InventoryManager : MonoBehaviour
         }
     }
 
-    public void AddItemForSlotById(int slotId, int advancedItemId, int advancedAmount, string advancedItemName)
+    public void AddItemForSlotById(int slotId, int advancedItemId, int advancedAmount)
     {
         _slots[slotId].AddItem(advancedItemId, advancedAmount);
-        Debug.Log($"[{ownerId}] Slot Id: {_slots[slotId]} itemIdAdded {_slots[slotId].itemID} amountAdded {_slots[slotId].amount} ItemNameAdded {_slots[slotId].itemName}");
+        var conf = ItemDatabase.GetConfig(_slots[slotId].itemID);
+        Debug.Log($"[{ownerId}] Slot Id: {_slots[slotId]} itemIdAdded {_slots[slotId].itemID} amountAdded {_slots[slotId].amount} ItemNameAdded {conf.displayName}");
     }
     
     public void RemoveItemForSlot(int itemRemoveId, int removeAmount)

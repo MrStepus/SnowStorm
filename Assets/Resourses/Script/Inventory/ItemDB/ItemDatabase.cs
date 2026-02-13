@@ -51,6 +51,7 @@ public static class ItemDatabase
         public int id;
         public string displayName;
         public int maxStack;
+        public string itemType;
     }
 
     [Serializable]

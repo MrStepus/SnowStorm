@@ -21,6 +21,7 @@ public class MultiInventoryExample : MonoBehaviour
         // По умолчанию открываем инвентарь игрока
         SimpleInventoryService.Instance.OpenInventory("Player");
         
+        ItemDatabase.Load();
         // Примеры добавления предметов в разные инвентари
         AddExampleItems();
     }

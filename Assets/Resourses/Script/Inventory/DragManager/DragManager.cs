@@ -102,22 +102,43 @@ namespace assets.Script.Inventory.DragManager
             var targetSlot = targetInventory._slots[slotID];
             var conf = ItemDatabase.GetConfig(aItemID);
             // Случай 1: Слот пустой - просто кладём предмет
+
             if (targetSlot.itemID == 11111111 && targetSlot.slotType ==  conf.itemType || targetSlot.slotType == "any")
+
             {
                 targetSlot.AddItem(aItemID, dragAmount);
                 emptyDragCursor = true;
                 dragCursor.clearDragCursor();
+                aItemID = 11111111;
+                dragAmount = 0;
                 var config = ItemDatabase.GetConfig(aItemID);
                 Debug.Log($"[DragManager] Положили предмет '{config.displayName}' в '{targetOwnerId}', слот {slotID}");
             }
             // Случай 2: В слоте тот же предмет - складываем стаки
             else if (targetSlot.itemID == aItemID)
             {
-                StackItems(targetOwnerId, slotID);
+                int freeSpace = conf.maxStack - targetSlot.amount;
+                if (freeSpace <= 0)
+                {
+                    if (targetSlot.slotType == conf.itemType || targetSlot.slotType == "any" || conf.itemType == "all")
+                    {
+                        ItemSwap(targetOwnerId, targetSlot, slotID);                    
+                    }
+                }
+                else
+                {
+                    StackItems(targetOwnerId, slotID);                    
+                }
             }
             // Случай 3: В слоте другой предмет - делаем обмен (swap)
             else
             {
+                if (conf == null)
+                {
+                    Debug.LogError($"Config не найден для itemID {aItemID}");
+                    return;
+                }
+
                 if (targetSlot.slotType == conf.itemType || targetSlot.slotType == "any")
                 {
                     ItemSwap(targetOwnerId, targetSlot, slotID);                    
@@ -144,6 +165,11 @@ namespace assets.Script.Inventory.DragManager
             sourceOwnerId = targetOwnerId; // ВАЖНО: обновляем источник!
 
             dragCursor.setDragCursor(dragAmount);
+            if (aItemID == 0)
+            {
+                aItemID = 11111111; 
+                dragCursor.clearDragCursor();
+            }
             
             var config = ItemDatabase.GetConfig(aItemID);
             if (config != null)
