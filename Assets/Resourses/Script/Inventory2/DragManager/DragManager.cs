@@ -16,7 +16,7 @@ namespace assets.Script.Inventory.DragManager
         
         // Данные перетаскиваемого предмета (слот A)
         public int dragAmount;
-        public int aItemID;
+        public int aItemID = 11111111;
         public int aSlotID;
 
         // Временные данные для свапа (слот B)
@@ -27,7 +27,7 @@ namespace assets.Script.Inventory.DragManager
         public void ItemDragSlot(string ownerId, int amount, int itemID, int slotID)
         {
             // ФИКС: Проверяем что слот не пустой
-            if (itemID == 0 || amount == 0)
+            if (itemID == 11111111 || amount == 0)
             {
                 Debug.LogWarning($"[DragManager] Попытка взять пустой слот {slotID} из '{ownerId}'");
                 return;
@@ -60,7 +60,7 @@ namespace assets.Script.Inventory.DragManager
 
             // Очищаем слот
             var slot = inventory._slots[slotID];
-            slot.itemID = 0;
+            slot.itemID = 11111111;
             slot.amount = 0;
             slot.UpdateUI();
 
