@@ -8,6 +8,8 @@ public static class ItemDatabase
     private static Dictionary<int, ItemConfig> _database = new Dictionary<int, ItemConfig>();
     private static bool _isLoaded = false;
     
+    
+    
     public static void Load()
     {
         if (_isLoaded) return;
@@ -51,6 +53,7 @@ public static class ItemDatabase
         public int id;
         public string displayName;
         public int maxStack;
+        public string itemType;
     }
 
     [Serializable]

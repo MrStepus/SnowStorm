@@ -56,8 +56,13 @@ public class MultiInventoryExample : MonoBehaviour
         
         if (Input.GetKeyDown(KeyCode.Q))
         {
+            if (string.IsNullOrEmpty(currentOpenInventory))
+            {
+                Debug.LogWarning("Сначала открой инвентарь (клавиши 1, 2, 3)");
+                return;
+            }
             // Добавить предмет в текущий открытый инвентарь
-            SimpleInventoryService.Instance.AddItemToInventory(currentOpenInventory, 1, 5);
+            SimpleInventoryService.Instance.AddItemToInventory(currentOpenInventory, 26050202, 5);
         }
 
         if (Input.GetKeyDown(KeyCode.W))

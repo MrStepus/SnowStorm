@@ -1384,7 +1384,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventoryManager
   ownerId: Player
   inventoryName: Player
-  DragManager: {fileID: 648110802}
+  DragManager: {fileID: 2024819697}
   _slots:
   - {fileID: 853046617}
   - {fileID: 1698345706}
@@ -2020,50 +2020,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d5747fc4aa6e62e4b90a8ffe12729502, type: 3}
---- !u!1 &596777563
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 596777565}
-  - component: {fileID: 596777564}
-  m_Layer: 0
-  m_Name: InventoryService
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &596777564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 596777563}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 649e72a6411d9b943b96f8f39ca30189, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::assets.Script.Inventory.SimpleInventoryService
---- !u!4 &596777565
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 596777563}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &601365901
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2169,59 +2125,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d5747fc4aa6e62e4b90a8ffe12729502, type: 3}
---- !u!1 &648110801
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 648110803}
-  - component: {fileID: 648110802}
-  m_Layer: 5
-  m_Name: 'DragManager '
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &648110802
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 648110801}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28afcfcd473e41bfa4a9a883e669df34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::assets.Script.Inventory.DragManager.DragManager
-  dragCursor: {fileID: 1244373892}
-  emptyDragCursor: 0
-  dragAmount: 0
-  aItemID: 0
-  aSlotID: 0
---- !u!224 &648110803
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 648110801}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 616.7, y: 255.33}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &663995128
 GameObject:
   m_ObjectHideFlags: 0
@@ -2253,7 +2156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::InventoryManager
   ownerId: chest
   inventoryName: Chest
-  DragManager: {fileID: 648110802}
+  DragManager: {fileID: 2024819697}
   _slots:
   - {fileID: 159319875}
   - {fileID: 1402661633}
@@ -6436,8 +6339,10 @@ GameObject:
   m_Component:
   - component: {fileID: 2024819695}
   - component: {fileID: 2024819694}
+  - component: {fileID: 2024819697}
+  - component: {fileID: 2024819696}
   m_Layer: 0
-  m_Name: MultyInventory
+  m_Name: MultyInventory&DragManager&InventoryService
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6473,6 +6378,35 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2024819696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2024819693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 649e72a6411d9b943b96f8f39ca30189, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::assets.Script.Inventory.SimpleInventoryService
+--- !u!114 &2024819697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2024819693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f954ffba06647db48b2242633215327b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::assets.Script.Inventory.DragManager.DragManager
+  dragCursor: {fileID: 1244373892}
+  emptyDragCursor: 1
+  dragAmount: 0
+  aItemID: 11111111
+  aSlotID: 0
 --- !u!224 &2051001854 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3805688067809857693, guid: d5747fc4aa6e62e4b90a8ffe12729502, type: 3}
@@ -6714,6 +6648,4 @@ SceneRoots:
   - {fileID: 902862554}
   - {fileID: 895083554}
   - {fileID: 1814717597}
-  - {fileID: 596777565}
   - {fileID: 2024819695}
-  - {fileID: 648110803}

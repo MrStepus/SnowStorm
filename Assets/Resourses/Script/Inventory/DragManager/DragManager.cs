@@ -3,13 +3,7 @@ using assets.Script.Inventory;
 
 namespace assets.Script.Inventory.DragManager
 {
-    /// <summary>
-    /// Обновлённый DragManager для работы с мульти-инвентарём
-    /// Теперь он работает через SimpleInventoryService и запоминает ownerId инвентарей
-    /// 
-    /// ИСПРАВЛЕН БАГ: IndexOutOfRangeException при клике на пустой слот
-    /// </summary>
-    public class DragManager : MonoBehaviour
+    public class DragManager1 : MonoBehaviour
     {
         [Header("Ссылки")]
         public DragCursor dragCursor;
@@ -22,17 +16,15 @@ namespace assets.Script.Inventory.DragManager
         
         // Данные перетаскиваемого предмета (слот A)
         public int dragAmount;
-        public int aItemID;
+        public int aItemID = 11111111;
         public int aSlotID;
 
         // Временные данные для свапа (слот B)
         private int bAmount;
         private int bItemID;
-
-        /// <summary>
+        
         /// Вызывается когда берём предмет из слота
-        /// </summary>
-        public void ItemDragSlot(string ownerId, int amount, string itemName, int itemID, int maxItemStack, int slotID)
+        public void ItemDragSlot(string ownerId, int amount, int itemID, int slotID)
         {
             // ФИКС: Проверяем что слот не пустой
             if (itemID == 0 || amount == 0)
@@ -57,8 +49,7 @@ namespace assets.Script.Inventory.DragManager
                 emptyDragCursor = true; // Сбрасываем состояние
                 return;
             }
-
-            // ФИКС: Проверяем валидность индекса слота
+            
             if (slotID < 0 || slotID >= inventory._slots.Count)
             {
                 Debug.LogError($"[DragManager] Некорректный slotID {slotID} для инвентаря '{ownerId}' (всего слотов: {inventory._slots.Count})");
@@ -68,7 +59,7 @@ namespace assets.Script.Inventory.DragManager
 
             // Очищаем слот
             var slot = inventory._slots[slotID];
-            slot.itemID = 0;
+            slot.itemID = 11111111;
             slot.amount = 0;
             slot.UpdateUI();
 
@@ -81,15 +72,10 @@ namespace assets.Script.Inventory.DragManager
             var config = ItemDatabase.GetConfig(aItemID);
             Debug.Log($"[DragManager] Взяли предмет '{config.displayName}' из инвентаря '{ownerId}', слот {slotID}");
         }
-
-        /// <summary>
+        
         /// Вызывается когда кладём предмет в слот
-        /// ИСПРАВЛЕН: теперь не требует валидные параметры для пустого слота
-        /// </summary>
         public void ItemDropSlot(string targetOwnerId, int slotID)
         {
-            // ФИКС: Упрощённая сигнатура - теперь нужен только ownerId и slotID
-            // Все данные о предмете уже есть в переменных класса (aItemID, aName и т.д.)
             
             if (emptyDragCursor)
             {
@@ -114,26 +100,41 @@ namespace assets.Script.Inventory.DragManager
 
             var targetSlot = targetInventory._slots[slotID];
 
-            // Случай 1: Слот пустой - просто кладём предмет
-            if (targetSlot.itemID == 0)
+            var conf =  ItemDatabase.GetConfig(aItemID);
+            
+            if (conf == null)
             {
-                targetSlot.AddItem(aItemID, dragAmount);
-                emptyDragCursor = true;
-                dragCursor.clearDragCursor();
-                
-                var config = ItemDatabase.GetConfig(aItemID);
-                Debug.Log($"[DragManager] Положили предмет '{config.displayName}' в '{targetOwnerId}', слот {slotID}");
+                Debug.LogError($"[DragManager] Предмет {aItemID} не найден в ItemDatabase!");
+                return; // Или CancelDrag() чтобы вернуть предмет
             }
-            // Случай 2: В слоте тот же предмет - складываем стаки
-            else if (targetSlot.itemID == aItemID)
+            
+            if (targetSlot.slotType == conf.itemType || targetSlot.slotType == "any")
             {
-                StackItems(targetOwnerId, slotID);
+                // Случай 1: Слот пустой - просто кладём предмет
+                if (targetSlot.itemID == 11111111)
+                {
+                    targetSlot.AddItem(aItemID, dragAmount);
+                    emptyDragCursor = true;
+                    dragCursor.clearDragCursor();
+                    
+                    Debug.Log($"[DragManager] Положили предмет '{conf.displayName}' в '{targetOwnerId}', слот {slotID}");
+                }
+                // Случай 2: В слоте тот же предмет - складываем стаки
+                else if (targetSlot.itemID == aItemID)
+                {
+                    StackItems(targetOwnerId, slotID);
+                }
+                // Случай 3: В слоте другой предмет - делаем обмен (swap)
+                else
+                {
+                    ItemSwap(targetOwnerId, targetSlot, slotID);
+                }
             }
-            // Случай 3: В слоте другой предмет - делаем обмен (swap)
             else
             {
-                ItemSwap(targetOwnerId, targetSlot, slotID);
+                Debug.LogWarning($"[DragManager] Нельзя положить {conf.itemType} в слот типа {targetSlot.slotType}");
             }
+            
         }
 
         /// <summary>

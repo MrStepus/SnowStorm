@@ -4,23 +4,19 @@ using UnityEngine;
 public class InventorySlot : MonoBehaviour
 {
     [Header("Данные предмета")]
-    public int itemID;
+    public int itemID = 11111111;
     public int amount = 0;
-    public int itemMaxStack = 18;
-    public string itemName;
 
-    [Header("ID слота")]
+    [Header("Данные слота")]
     public int slotId;
+    public string slotType;
     
     [Header("UI")]
     public TMP_Text titleText;
     public TMP_Text amountTitle;
     
-    [Header("Ссылки")]
     public DragManager dragManager;
     
-    // ===== Ссылка на родительский инвентарь =====
-    [HideInInspector]
     public InventoryManager parentInventory;
 
     private void Start()
@@ -59,7 +55,7 @@ public class InventorySlot : MonoBehaviour
     /// Очистить слот полностью
     public void ClearSlot()
     {
-        itemID = 0;
+        itemID = 11111111;
         amount = 0;
         UpdateUI();
     }
@@ -67,7 +63,7 @@ public class InventorySlot : MonoBehaviour
     /// Обновить UI слота
     public void UpdateUI()
     {
-        if (amount == 0 || itemID == 0)
+        if (amount == 0 || itemID == 11111111)
         {
             titleText.text = "";
             amountTitle.text = "";
@@ -84,13 +80,13 @@ public class InventorySlot : MonoBehaviour
     {
         if (parentInventory == null)
         {
-            Debug.LogError($"[InventorySlot2] Слот {slotId} не привязан к инвентарю!");
+            Debug.LogError($"[InventorySlot] Слот {slotId} не привязан к инвентарю!");
             return;
         }
         
         if (dragManager == null)
         {
-            Debug.LogError($"[InventorySlot2] Слот {slotId} не имеет ссылки на DragManager!");
+            Debug.LogError($"[InventorySlot] Слот {slotId} не имеет ссылки на DragManager!");
             return;
         }
 
@@ -99,13 +95,13 @@ public class InventorySlot : MonoBehaviour
         if (dragManager.emptyDragCursor)
         {
 
-            if (itemID == 0 || amount == 0)
+            if (itemID == 11111111 || amount == 0)
             {
-                Debug.Log($"[InventorySlot2] Попытка взять пустой слот {slotId}");
+                Debug.Log($"[InventorySlot] Попытка взять пустой слот {slotId}");
                 return;
             }
             
-            dragManager.ItemDragSlot(ownerId, amount, itemName, itemID, itemMaxStack, slotId);
+            dragManager.ItemDragSlot(ownerId, amount, itemID, slotId);
             UpdateUI();
         }
         else
@@ -118,7 +114,7 @@ public class InventorySlot : MonoBehaviour
     /// ОПЦИОНАЛЬНОЕ: Проверить, пустой ли слот
     public bool IsEmpty()
     {
-        return itemID == 0 || amount == 0;
+        return itemID == 11111111 || amount == 0;
     }
     
     /// ОПЦИОНАЛЬНОЕ: Проверить, можно ли добавить предмет в этот слот
@@ -127,7 +123,8 @@ public class InventorySlot : MonoBehaviour
         // Если слот пустой - можем добавить
         if (IsEmpty()) return true;
         
-        if (itemID == checkItemId && (amount + checkAmount) <= itemMaxStack)
+        var conf = ItemDatabase.GetConfig(itemID);
+        if (itemID == checkItemId && (amount + checkAmount) <= conf.maxStack) 
         {
             return true;
         }
@@ -141,6 +138,6 @@ public class InventorySlot : MonoBehaviour
         var config = ItemDatabase.GetConfig(itemID);
         if (IsEmpty()) return config.maxStack;
         if (itemID != checkItemId) return 0;
-        return itemMaxStack - amount;
+        return config.maxStack - amount;
     }
 }
