@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Core.Composition
 {
-    public class Component { }
+    public abstract class Component { }
 
     public class HealAbility : Component
     {
@@ -16,4 +16,14 @@ namespace Core.Composition
         public int maxHp;
         
     }
+
+    public class ObjectGame : Component
+    {
+        public ObjectGame(GameObject go)
+        {
+            _gameObject = go;
+        }
+
+        public GameObject _gameObject;
+    } 
 }
